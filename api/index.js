@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-dotenv.config({ path: "./router/.env" })
+const authRoute = require("./routes/auth")
+dotenv.config({ path: "./routes/.env" })
+app.use(express.json())
 mongoose.connect(process.env.CONNECTION_URL,{
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -13,6 +15,7 @@ mongoose.connect(process.env.CONNECTION_URL,{
   .catch((err) => {
     console.log(err);
   });
+  app.use("/auth", authRoute)
 app.listen("5000",() => {
     console.log("backend running");
 })
